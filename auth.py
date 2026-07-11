@@ -2,9 +2,14 @@ import streamlit as st
 import sqlite3
 import bcrypt
 from pathlib import Path
+from database import create_table
 
 DATABASE = "users.db"
 APP_DIR = Path(__file__).parent
+
+# Ensure the users table exists before any query runs against it.
+# Safe to call every time — uses CREATE TABLE IF NOT EXISTS.
+create_table()
 
 def get_connection():
     return sqlite3.connect(DATABASE, check_same_thread=False)
@@ -138,4 +143,4 @@ def login_page():
                     if create_user(username, email, password):
                         st.success("Account created! You can now sign in.")
                     else:
-                        st.error("Username or email already exists.") 
+                        st.error("Username or email already exists.")
