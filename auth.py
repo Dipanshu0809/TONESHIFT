@@ -36,7 +36,49 @@ def login_user(username, password):
             return True
     return False
 
+def ensure_google_user(email, display_name):
+    """Make sure a Google-authenticated user has a row in the users table.
+    Google users don't have a local password, so we store a random,
+    unusable placeholder hash — they can never log in with it directly,
+    only via st.login()."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT username FROM users WHERE email=?", (email,))
+    existing = cursor.fetchone()
+    if existing:
+        conn.close()
+        return existing[0]
+
+    username = display_name or email.split("@")[0]
+    placeholder_hash = bcrypt.hashpw(bcrypt.gensalt(), bcrypt.gensalt())
+    try:
+        cursor.execute(
+            "INSERT INTO users(username,email,password) VALUES(?,?,?)",
+            (username, email, placeholder_hash),
+        )
+        conn.commit()
+    except sqlite3.IntegrityError:
+        # username taken by a different account; fall back to email as username
+        username = email
+        cursor.execute(
+            "INSERT INTO users(username,email,password) VALUES(?,?,?)",
+            (username, email, placeholder_hash),
+        )
+        conn.commit()
+    conn.close()
+    return username
+
 def login_page():
+    # 0. If the user just came back from a successful Google login,
+    #    sync it into our own session state / users table and enter the app.
+    #    (hasattr guard: st.user.is_logged_in raises AttributeError, not False,
+    #    if secrets.toml has no valid [auth] config yet.)
+    if hasattr(st.user, "is_logged_in") and st.user.is_logged_in:
+        username = ensure_google_user(st.user.email, st.user.name)
+        st.session_state.logged_in = True
+        st.session_state.username = username
+        st.rerun()
+
     # 1. Inject the rewritten layout rules
     login_css = APP_DIR / "styles" / "login.css"
     if login_css.exists():
@@ -49,7 +91,7 @@ def login_page():
 
     # 3. Form box (its own separate card, below the logo box)
     with st.container(border=True):
-        tab1, tab2 = st.tabs(["🔒 Sign In", "✨ Create Account"])
+        tab1, tab2 = st.tabs(["🔒 Sign In", "Create Account"])
 
         # ---------------- SIGNIN FORM ----------------
         with tab1:
@@ -65,6 +107,18 @@ def login_page():
                     st.rerun()
                 else:
                     st.error("Invalid Username or Password")
+
+            st.markdown('<div class="auth-divider">OR</div>', unsafe_allow_html=True)
+            st.markdown('<div class="google-btn-marker"></div>', unsafe_allow_html=True)
+            if st.button("🔵 Continue with Google", use_container_width=True, key="google_login_btn"):
+                try:
+                    st.login()
+                except Exception:
+                    st.error(
+                        "Google sign-in isn't configured yet. Make sure "
+                        "`.streamlit/secrets.toml` exists with a valid [auth] "
+                        "section, then restart the app."
+                    )
 
         # ---------------- SIGNUP FORM ----------------
         with tab2:
@@ -82,6 +136,6 @@ def login_page():
                     st.error("Passwords do not match.")
                 else:
                     if create_user(username, email, password):
-                        st.success("🎉 Account created! You can now sign in.")
+                        st.success("Account created! You can now sign in.")
                     else:
-                        st.error("Username or email already exists.")
+                        st.error("Username or email already exists.") 
