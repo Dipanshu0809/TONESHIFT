@@ -426,28 +426,3 @@ div[data-testid="stButton"] button:active,
 div[data-testid="stDownloadButton"] button:active {
     transform: translateY(0px);
 }
-/* ==========================================
-   Sidebar Reopen Button (>>)
-========================================== */
-
-header[data-testid="stHeader"] button{
-    background: rgba(30,36,52,.9) !important;
-    border: 1px solid rgba(255,255,255,.15) !important;
-    border-radius: 8px !important;
-}
-
-header[data-testid="stHeader"] button svg{
-    fill:#ffffff !important;
-    color:#ffffff !important;
-    stroke:#ffffff !important;
-}
-
-header[data-testid="stHeader"] button:hover{
-    background:#ff8a3d !important;
-}
-
-header[data-testid="stHeader"] button:hover svg{
-    fill:#111111 !important;
-    color:#111111 !important;
-    stroke:#111111 !important;
-}
