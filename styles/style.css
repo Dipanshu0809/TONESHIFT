@@ -50,6 +50,26 @@ header[data-testid="stHeader"] {
     color: var(--ts-text) !important;
 }
 
+/* ---- Selectbox / dropdown (unconditional — same reasoning as sidebar:
+   Streamlit's own base theme can show through dark regardless of our
+   custom Light/Dark toggle unless we force it here too) ---- */
+div[data-baseweb="select"],
+div[data-baseweb="select"] > div,
+div[data-baseweb="select"] div {
+    background: var(--ts-panel-alt) !important;
+    border-color: var(--ts-border) !important;
+}
+div[data-baseweb="select"] * {
+    color: var(--ts-text) !important;
+}
+ul[data-baseweb="menu"] {
+    background: var(--ts-panel-alt) !important;
+}
+ul[data-baseweb="menu"] li,
+ul[data-baseweb="menu"] li * {
+    color: var(--ts-text) !important;
+}
+
 /* ---------- Header rack ---------- */
 .ts-rack {
     background: radial-gradient(circle at 15% 20%, #262a3d 0%, var(--ts-rack) 55%);
