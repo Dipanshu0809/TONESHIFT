@@ -15,4 +15,4 @@ venv/
 .idea/
 
 users.db
-.streamlit/
+.streamlit/secrets.toml
