@@ -201,7 +201,7 @@ ToneShift/
 ├── LICENSE                      # MIT license
 ├── users.db                     # SQLite user database (gitignored, auto-created)
 │
-├── .streamlit/
+├── .streamlit/config.toml
 │   └── secrets.toml              # Real Google OAuth credentials (gitignored, not tracked)
 │
 ├── utils/
