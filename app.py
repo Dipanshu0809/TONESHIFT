@@ -217,7 +217,6 @@ def render_header() -> None:
             <h1>ToneShift</h1>
             <p>Dial in a tone, a listener, and a style — get text remastered
             to fit, with every fact, name, and number still intact.</p>
-            <div class="ts-rack-tag">MODEL&nbsp;TS&#8209;1 &middot; ENGINE: GEMINI</div>
         </div>
         """,
         unsafe_allow_html=True,
