@@ -350,8 +350,9 @@ def main() -> None:
     if not st.session_state.logged_in:
         login_page()
         return
-    load_css()
+    
     controls = render_sidebar()
+    load_css()
     render_header()
 
     col_input, col_output = st.columns(2, gap="large")
