@@ -1,0 +1,428 @@
+/* =========================================================
+   TONESHIFT — BOLD & MODERN DASHBOARD THEME
+   (light-mode defaults; overridden by DARK_OVERRIDES
+   variables in app.py when Dark mode is selected)
+========================================================= */
+
+[data-testid="stAppDeployButton"], [data-testid="stDecoration"] {
+    display: none !important;
+}
+
+/* ---------- Design tokens (light mode defaults) ---------- */
+:root {
+    --ts-bg: #f3f0ff;
+    --ts-panel: #ffffff;
+    --ts-panel-alt: #f2effc;
+    --ts-rack: #14161d;
+    --ts-border: #e3ddf7;
+    --ts-text: #17151f;
+    --ts-text-muted: #6b6580;
+    --ts-text-on-rack: #f5f6fa;
+    --ts-text-on-rack-muted: #a7adbd;
+    --ts-accent: #ff8a3d;
+    --ts-accent-strong: #ff6b1a;
+    --ts-secondary: #14b8a6;
+    --ts-danger: #ef4444;
+    --ts-warn: #d97706;
+    --ts-highlight-bg: #fde3c8;
+    --ts-highlight-text: #7c3a00;
+}
+
+.stApp {
+    background: var(--ts-bg) !important;
+}
+
+/* Recolor the header bar (kept visible for the sidebar reopen control)
+   instead of leaving Streamlit's default white showing through */
+header[data-testid="stHeader"] {
+    background: var(--ts-bg) !important;
+    background-color: var(--ts-bg) !important;
+}
+
+/* ---------- Header rack ---------- */
+.ts-rack {
+    background: radial-gradient(circle at 15% 20%, #262a3d 0%, var(--ts-rack) 55%);
+    color: var(--ts-text-on-rack);
+    border-radius: 20px;
+    padding: 36px 40px;
+    margin-bottom: 28px;
+    box-shadow: 0 20px 45px rgba(255, 106, 26, 0.14);
+    border: 1px solid rgba(255, 138, 61, 0.25);
+}
+.ts-rack h1 {
+    color: var(--ts-text-on-rack);
+    margin: 6px 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 48px;
+    background: linear-gradient(90deg, #ffffff 0%, #ffcf9e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.ts-rack p {
+    color: var(--ts-text-on-rack-muted);
+    margin: 0;
+    font-size: 16px;
+}
+.ts-rack-eyebrow {
+    color: var(--ts-accent);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+.ts-rack-tag {
+    margin-top: 18px;
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ts-accent);
+    background: rgba(255, 138, 61, 0.12);
+    border: 1px solid rgba(255, 138, 61, 0.35);
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+/* ---------- Cards (real Streamlit bordered containers)
+   Confirmed via DevTools: the actual bordered element is
+   div[data-testid="stVerticalBlock"] carrying
+   data-test-scroll-behavior, not stVerticalBlockBorderWrapper */
+div[data-testid="stVerticalBlock"][data-test-scroll-behavior] {
+    border: 1px solid var(--ts-border) !important;
+    border-radius: 18px !important;
+    background: var(--ts-panel) !important;
+    box-shadow: 0 8px 24px rgba(23, 21, 31, 0.06) !important;
+    padding: 22px !important;
+}
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    overflow: visible !important;
+}
+/* Legacy class kept for any remaining manual usage */
+.ts-card {
+    background: var(--ts-panel);
+    border: 1px solid var(--ts-border);
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 24px rgba(23, 21, 31, 0.06);
+}
+
+/* ---------- Channel headers ---------- */
+.ts-channel-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.ts-label {
+    font-weight: 700;
+    color: var(--ts-text);
+    font-size: 15px;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.2px;
+}
+.ts-led {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 0 4px currentColor22;
+}
+.ts-led-input { background: var(--ts-secondary); box-shadow: 0 0 10px var(--ts-secondary); }
+.ts-led-output { background: var(--ts-accent); box-shadow: 0 0 10px var(--ts-accent); }
+
+/* ---------- Metric row ---------- */
+.ts-metric-row {
+    display: flex;
+    gap: 12px;
+    margin: 16px 0 6px;
+    flex-wrap: wrap;
+}
+.ts-metric {
+    background: var(--ts-panel-alt);
+    border: 1px solid var(--ts-border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    text-align: center;
+    flex: 1;
+    min-width: 90px;
+}
+.ts-metric .value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ts-accent-strong);
+    font-family: 'Space Grotesk', sans-serif;
+}
+.ts-metric .label {
+    font-size: 11px;
+    color: var(--ts-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-weight: 600;
+}
+
+/* ---------- Text display boxes ---------- */
+.ts-text-box {
+    background: var(--ts-panel-alt);
+    border: 1px solid var(--ts-border);
+    border-radius: 12px;
+    padding: 18px;
+    color: var(--ts-text);
+    white-space: pre-wrap;
+    min-height: 80px;
+    line-height: 1.55;
+}
+.ts-text-box mark, .ts-text-box ins {
+    background: var(--ts-highlight-bg);
+    color: var(--ts-highlight-text);
+    border-radius: 4px;
+    padding: 0 3px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ---------- History items ---------- */
+.ts-history-item {
+    background: var(--ts-panel-alt);
+    border: 1px solid var(--ts-border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--ts-text);
+}
+.ts-history-item .meta {
+    font-size: 11px;
+    color: var(--ts-accent-strong);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+/* ---------- Score chips ---------- */
+.ts-chip {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin: 8px 0;
+    letter-spacing: 0.3px;
+}
+.ts-chip-high { background: rgba(20,184,166,0.15); color: var(--ts-secondary); }
+.ts-chip-medium { background: rgba(217,119,6,0.15); color: var(--ts-warn); }
+.ts-chip-low { background: rgba(239,68,68,0.15); color: var(--ts-danger); }
+
+/* ---------- Meaning meter ---------- */
+.ts-meter-wrap {
+    text-align: center;
+}
+.ts-meter-wrap svg {
+    max-width: 260px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+.ts-meter-score {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--ts-accent-strong);
+    font-family: 'Space Grotesk', sans-serif;
+    margin-top: 8px;
+}
+.ts-meter-verdict {
+    color: var(--ts-text-muted);
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+/* ---------- Footer ---------- */
+.ts-footer {
+    text-align: center;
+    color: var(--ts-text-muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    margin-top: 34px;
+    padding-top: 18px;
+    border-top: 1px solid var(--ts-border);
+}
+
+/* ---------- Text area (rewrite input) ---------- */
+.stTextArea textarea {
+    background: var(--ts-panel-alt) !important;
+    color: var(--ts-text) !important;
+    border: 1px solid var(--ts-border) !important;
+    border-radius: 12px !important;
+}
+.stTextArea textarea:focus {
+    border-color: var(--ts-accent) !important;
+    box-shadow: 0 0 0 2px rgba(255, 138, 61, 0.25) !important;
+}
+
+/* ---------- Equal-height columns (Channel 1 / Channel 2 cards) ---------- */
+div[data-testid="stHorizontalBlock"] {
+    align-items: stretch !important;
+}
+div[data-testid="stHorizontalBlock"] > div {
+    height: 100% !important;
+}
+div[data-testid="stHorizontalBlock"] > div > div {
+    height: 100% !important;
+}
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    height: 100% !important;
+    box-sizing: border-box !important;
+}
+div[data-testid="stVerticalBlock"][data-test-scroll-behavior] {
+    height: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* ---------- File uploader ---------- */
+[data-testid="stFileUploaderDropzone"] {
+    background: var(--ts-panel-alt) !important;
+    border: 1px dashed var(--ts-border) !important;
+    border-radius: 12px !important;
+}
+
+/* =========================================================
+   AUTH SCREEN
+========================================================= */
+
+.main div[data-testid="stVerticalBlock"]:first-child {
+    max-width: 460px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 0 !important;
+}
+
+.auth-card-container {
+    width: 100%;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(22, 28, 45, 0.65) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.6),
+        0 0 50px rgba(255, 138, 61, 0.1);
+}
+
+.auth-logo {
+    text-align: center;
+    font-size: 44px;
+    font-weight: 800;
+    color: #ff8a3d;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 25px rgba(255, 138, 61, 0.4);
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #707e94;
+    font-size: 14px;
+    margin-bottom: 30px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+div[data-testid="stWidgetLabel"] p {
+    color: #a0aec0 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
+.stTextInput input {
+    background-color: #0d111a !important;
+    color: #f8fafc !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 10px !important;
+    padding: 12px 14px !important;
+    font-size: 15px !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.stTextInput input:focus {
+    border-color: #ff8a3d !important;
+    box-shadow: 0 0 0 1px #ff8a3d !important;
+    background-color: #111622 !important;
+}
+
+.stTabs [data-baseweb="tab-list"] {
+    gap: 6px;
+    background: #0d111a !important;
+    padding: 4px !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stTabs [data-baseweb="tab"] {
+    color: #707e94 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border-bottom: none !important;
+    padding: 10px 20px !important;
+    background: transparent !important;
+    transition: color 0.2s ease;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    color: #e2e8f0 !important;
+}
+
+.stTabs [aria-selected="true"] {
+    background: rgba(255, 138, 61, 0.15) !important;
+    color: #ff8a3d !important;
+    border-radius: 6px !important;
+    border: 1px solid rgba(255, 138, 61, 0.25) !important;
+}
+
+/* ---------- Buttons (shared: auth + dashboard) ---------- */
+div[data-testid="stButton"] button,
+div[data-testid="stDownloadButton"] button {
+    background: linear-gradient(135deg, var(--ts-accent, #ff8a3d) 0%, var(--ts-accent-strong, #ff6b1a) 100%) !important;
+    color: #14161d !important;
+    font-weight: 800 !important;
+    font-size: 15px !important;
+    border-radius: 12px !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 6px 18px rgba(255, 107, 26, 0.3) !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+div[data-testid="stButton"] button p,
+div[data-testid="stDownloadButton"] button p {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin: 0 !important;
+}
+
+div[data-testid="stButton"] button:hover,
+div[data-testid="stDownloadButton"] button:hover {
+    filter: brightness(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(255, 107, 26, 0.4) !important;
+}
+
+div[data-testid="stButton"] button:active,
+div[data-testid="stDownloadButton"] button:active {
+    transform: translateY(0px);
+}

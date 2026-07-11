@@ -1,0 +1,255 @@
+/* =========================================================
+       PREMIUM DARK INDUSTRIAL GLASSMORPHIC AUTHENTICATION
+========================================================= */
+
+/* Hide only the deploy button/decoration bar — NOT the whole header,
+   since the header also contains the sidebar reopen (>>) control */
+[data-testid="stAppDeployButton"], [data-testid="stDecoration"] {
+    display: none !important;
+}
+
+/* Base Fullscreen Viewport Canvas setup */
+.stApp {
+    background: radial-gradient(circle at 50% 30%, #1e2640 0%, #0a0d14 100%) !important;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto !important;
+}
+
+/* Recolor the header bar (kept visible for the sidebar reopen control) */
+header[data-testid="stHeader"] {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Force structural component blocks to flex-center your authentication unit */
+.main div[data-testid="stVerticalBlock"]:first-child {
+    max-width: 460px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 0 !important;
+}
+
+/* The Glassmorphic Auth Panel Container
+   (confirmed via DevTools: the real bordered element is
+   div[data-testid="stVerticalBlock"] carrying
+   data-test-scroll-behavior, nested inside stLayoutWrapper —
+   NOT stVerticalBlockBorderWrapper) */
+div[data-testid="stVerticalBlock"][data-test-scroll-behavior] {
+    background: rgba(22, 28, 45, 0.6) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 138, 61, 0.35) !important;
+    border-radius: 16px !important;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 25px 60px rgba(255, 106, 26, 0.35) !important;
+    padding: 40px !important;
+}
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    margin-bottom: 20px !important;
+    overflow: visible !important;
+}
+
+/* Typography styles matching console theme */
+.auth-logo {
+    text-align: center;
+    font-size: 44px;
+    font-weight: 800;
+    color: #ffb84d;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 25px rgba(255, 184, 77, 0.4);
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 14px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ---- OR divider between Sign In and Google button ---- */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin: 18px 0;
+}
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ---- Google button (kept white per Google's brand guidelines) ----
+   A hidden marker div is placed immediately before the Google button
+   in auth.py; this selects whichever stButton immediately follows it. */
+div[data-testid="stElementContainer"]:has(.google-btn-marker) + div[data-testid="stElementContainer"] button {
+    background: #ffffff !important;
+    color: #1f2937 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+}
+div[data-testid="stElementContainer"]:has(.google-btn-marker) + div[data-testid="stElementContainer"] button p {
+    color: #1f2937 !important;
+}
+div[data-testid="stElementContainer"]:has(.google-btn-marker) + div[data-testid="stElementContainer"] button:hover {
+    background: #f3f4f6 !important;
+}
+
+/* =========================================================
+   CRITICAL FIX: MAXIMUM VISIBILITY TEXT INPUT LABELS
+========================================================= */
+div[data-testid="stWidgetLabel"], 
+div[data-testid="stWidgetLabel"] p, 
+label, 
+.stTextInput label,
+div[data-testid="stWidgetLabel"] span {
+    color: #ffffff !important;         /* Ultimate vibrant white */
+    font-size: 14px !important;
+    font-weight: 700 !important;         /* Extra bold definition */
+    opacity: 1 !important;               /* Destroys any translucent fading */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5) !important; /* Makes it pop off the glass layer */
+    margin-bottom: 6px !important;
+}
+
+/* Custom Text Input Fields */
+.stTextInput input {
+    background-color: #0d111a !important;
+    color: #ffffff !important; /* Pure white typed text */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important; 
+    border-radius: 10px !important;
+    padding: 12px 14px !important;
+    font-size: 15px !important;
+    transition: all 0.2s ease-in-out;
+}
+
+/* High visibility input field placeholder texts */
+.stTextInput input::placeholder {
+    color: #cbd5e1 !important; 
+    opacity: 0.8 !important;
+}
+
+.stTextInput input:focus {
+    border-color: #ffb84d !important;
+    box-shadow: 0 0 0 1px #ffb84d !important;
+    background-color: #111622 !important;
+}
+
+/* ==========================
+   STREAMLIT 1.58 TAB FIX
+========================== */
+
+/* Tab container */
+div[data-testid="stTab"]{
+    background:#141a26 !important;
+    border-radius:12px 12px 0 0 !important;
+    padding:10px 22px !important;
+    transition:.2s;
+}
+
+/* Tab text */
+div[data-testid="stTab"] p{
+    color:#d1d5db !important;
+    font-size:15px !important;
+    font-weight:700 !important;
+    margin:0 !important;
+}
+
+/* Active tab */
+div[data-testid="stTab"][aria-selected="true"]{
+    background:#ffb84d !important;
+    border-bottom:3px solid #ff6b35 !important;
+}
+
+/* Active text */
+div[data-testid="stTab"][aria-selected="true"] p{
+    color:#141414 !important;
+}
+
+/* Hover */
+div[data-testid="stTab"]:hover{
+    background:#263142 !important;
+}
+
+/* ===== FIX CUT TAB ===== */
+
+.stTabs{
+    overflow: visible !important;
+}
+
+.stTabs [data-baseweb="tab-list"]{
+    overflow: visible !important;
+    align-items: flex-end !important;
+    height: 60px !important;
+}
+
+div[data-testid="stTab"]{
+    overflow: visible !important;
+    margin-bottom: -4px !important;
+    z-index: 100 !important;
+}
+
+div[data-testid="stVerticalBlock"]{
+    overflow: visible !important;
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"]{
+    overflow: visible !important;
+}
+
+div[data-testid="stTabs"]{
+    overflow: visible !important;
+}
+
+/* Form Action Buttons Style Configuration with absolute overrides */
+div[data-testid="stButton"] button {
+    background: #ffb84d !important;
+    color: #0a0d14 !important;
+    border: none !important;
+    outline: none !important;
+    padding: 12px 20px !important;
+    font-weight: 800 !important;
+    font-size: 16px !important;
+    border-radius: 10px !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 15px rgba(255, 184, 77, 0.2) !important;
+}
+
+div[data-testid="stButton"] button:hover {
+    background: #ffa826 !important;
+    color: #0a0d14 !important;
+    border: none !important;
+    box-shadow: 0 6px 20px rgba(255, 184, 77, 0.3) !important;
+    transform: translateY(-1px);
+}
+
+div[data-testid="stButton"] button p {
+    color: #0a0d14 !important;
+    font-weight: 800 !important;
+}
+
+div[data-testid="stButton"] button:focus, 
+div[data-testid="stButton"] button:active {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: #ffa826 !important;
+}
